@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 
+import { Message } from './messages/message.model';
+
 @Component({
     selector: 'my-app',
     templateUrl: './app.component.html'
 })
 export class AppComponent {
-    content = "The most amazing content";
+    message: Message[] = [
+        new Message('Food', 'Mark'),
+        new Message('Emails', 'Shawn')
+    ];
 }
