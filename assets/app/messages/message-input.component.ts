@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { MessageService } from './message.service';
 import { Message } from './message.model';
+
 
 @Component({
 	selector: 'app-message-input',
@@ -13,8 +15,12 @@ export class MessageInputComponent {
 
 	}
 
-	onSave(value: string) {
-		const message = new Message(value, 'John');
+	onSubmit(form: NgForm) {
+		//console.log(form);
+		const message = new Message(form.value.content, 'John');
 		this.messageService.addMessage(message);
+
+		// form is reset
+		form.resetForm();
 	}
 }
