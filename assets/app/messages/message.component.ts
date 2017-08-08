@@ -1,43 +1,43 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 import { Message } from "./message.model";
 import { MessageService } from "./message.service";
 
 @Component({
-    selector: 'app-message',
-    templateUrl: './message.component.html',
-    styles: [`
-        .author {
-            display: inline-block;
-            font-style: italic;
-            font-size: 12px;
-            width: 80%;
-        }
-        .config {
-            display: inline-block;
-            text-align: right;
-            font-size: 12px;
-            width: 19%;
-        }
-    `]
+	selector: 'app-message',
+	templateUrl: './message.component.html',
+	styles: [`
+			.author {
+					display: inline-block;
+					font-style: italic;
+					font-size: 12px;
+					width: 80%;
+			}
+			.config {
+					display: inline-block;
+					text-align: right;
+					font-size: 12px;
+					width: 19%;
+			}
+	`]
 })
 export class MessageComponent {
-    @Input() message: Message;
+	@Input() message: Message;
+	@Output() editClicked = new EventEmitter<string>();
 
-    constructor(private messageService: MessageService) {}
+	color = 'red';
 
-    onEdit() {
-        this.messageService.editMessage(this.message);
-    }
+	constructor(private messageService: MessageService) {}
 
-    onDelete() {
-        this.messageService.deleteMessage(this.message)
-            .subscribe(
-                result => console.log(result)
-            );
-    }
+	onEdit() {
+			//alert('it worked');
+			this.editClicked.emit('Message has been edited');
+	}
 
-    belongsToUser() {
-        return localStorage.getItem('userId') == this.message.userId;
-    }
+	onDelete() {
+			this.messageService.deleteMessage(this.message)
+				.subscribe(
+						result => console.log(result)
+				);
+	}
 }
